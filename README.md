@@ -46,3 +46,11 @@ With Buildah it would be easier to work "as with docker cli", and allow building
           - Note that git URI can't point to directory, so context is root of the repo (similar to local build from repo root as `docker image build --file source/Dockerfile .`)
 2. When task is created, select `Deploy` and `Run task`
     - Target to cluster wanted and adjust compute configuration if needed
+
+### Example steps with custom Kaniko image
+
+As it's stated in the Kaniko's [Known issues](https://github.com/GoogleContainerTools/kaniko?tab=readme-ov-file#known-issues), Kaniko makes the build process on it's own root. Meaning if there would be similarly named files or directories, those would be overwritten.
+
+When tried to build custom image with GHA runner from [Dockerfile](./gha-runner-with-kaniko/Dockerfile), build process works fine as long as it's the last steps that's done. If trying to run any steps aftet the build, runner has lost it's logging directory which causes process to fail. See [build annotations](https://github.com/Hi-Fi/image-build-on-managed-app-services/actions/runs/8868849628).
+
+Also some configs are probably missing, as this way used Kaniko can't authenticate to AWS using task's role. Might be due to missing helper. See [logs](https://github.com/Hi-Fi/image-build-on-managed-app-services/actions/runs/8868810716/job/24348806877).
