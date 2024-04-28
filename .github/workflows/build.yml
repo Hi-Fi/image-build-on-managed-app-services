@@ -8,5 +8,4 @@ jobs:
     runs-on: self-hosted
     steps:
       - run: echo "building"
-      - run: executor --dockerfile=gha-runner-with-kaniko/Dockerfile --context=git://github.com/Hi-Fi/image-build-on-managed-app-services.git#refs/heads/custom_image --destination=052247400725.dkr.ecr.us-east-1.amazonaws.com/kaniko:gha-build
-      - run: echo "still here?"
+      - run: sudo executor --dockerfile=gha-runner-with-kaniko/Dockerfile --context=git://github.com/Hi-Fi/image-build-on-managed-app-services.git#refs/heads/custom_image --no-push
